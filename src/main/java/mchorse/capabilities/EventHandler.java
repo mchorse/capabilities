@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
@@ -49,7 +50,7 @@ public class EventHandler
         IMana mana = player.getCapability(ManaProvider.MANA_CAP, null);
 
         float points = mana.getMana();
-        float cost = event.getDistance() * 2;
+        float cost = event.getDistance() * 10;
 
         if (points > cost)
         {
@@ -60,5 +61,18 @@ public class EventHandler
 
             event.setCanceled(true);
         }
+    }
+
+    /**
+     * Copy data from dead player to the new player
+     */
+    @SubscribeEvent
+    public void onPlayerClone(PlayerEvent.Clone event)
+    {
+        EntityPlayer player = event.getEntityPlayer();
+        IMana mana = player.getCapability(ManaProvider.MANA_CAP, null);
+        IMana oldMana = event.getOriginal().getCapability(ManaProvider.MANA_CAP, null);
+
+        mana.set(oldMana.getMana());
     }
 }
