@@ -50,7 +50,7 @@ public class EventHandler
         IMana mana = player.getCapability(ManaProvider.MANA_CAP, null);
 
         float points = mana.getMana();
-        float cost = event.getDistance() * 10;
+        float cost = event.getDistance() * 3;
 
         if (points > cost)
         {
