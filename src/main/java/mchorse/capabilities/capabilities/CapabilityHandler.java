@@ -16,9 +16,9 @@ public class CapabilityHandler
     public static final ResourceLocation MANA_CAP = new ResourceLocation(CapabilitiesTest.MODID, "mana");
 
     @SubscribeEvent
-    public void attachCapability(AttachCapabilitiesEvent.Entity event)
+    public void attachCapability(AttachCapabilitiesEvent<Entity> event)
     {
-        if (!(event.getEntity() instanceof EntityPlayer)) return;
+        if (!(event.getObject() instanceof EntityPlayer)) return;
 
         event.addCapability(MANA_CAP, new ManaProvider());
     }
